@@ -35,7 +35,7 @@ fun MemoryScreen(
     val constraints = setConstraints()
 
     Surface(color = Black){
-        if(state.memory!=null){
+        state.memory?.let{
             ConstraintLayout(
                 constraints,
                 modifier = Modifier
@@ -53,11 +53,15 @@ fun MemoryScreen(
                     tags = state.memory.tags,
                     modifier = Modifier
                         .layoutId("memoryTagsView")
-                        .padding(start = 16.dp, top = 8.dp)
+                        .padding(start = 16.dp, top = 8.dp),
+                    onTagClicked = {
+                        //TODO
+                    }
                 )
                 LazyColumn(
                     modifier = Modifier
                         .layoutId("textView")
+                        .padding(start = 16.dp, end = 16.dp)
                         .fillMaxSize()
                 ){
                     item {
@@ -69,7 +73,7 @@ fun MemoryScreen(
 
                 ButtonBottom(modifier = Modifier
                     .layoutId("buttonRemember"),
-                    text = "Remember",
+                    text = "Edit",
                     onClicked = {
 
                     })
@@ -83,8 +87,9 @@ fun MemoryScreen(
                 Triangle(modifier = Modifier.layoutId("topTriangle"))
 
             }
-        }
+        } //if memory not null
 
+        //create view for empty memory
     }
 
 

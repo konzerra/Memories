@@ -1,6 +1,7 @@
 package com.konzerra.memories.data.repository
 
 import com.konzerra.memories.data.dto.MemoryDto
+import com.konzerra.memories.data.dto.TagDto
 import com.konzerra.memories.data.local.LocalDB
 import com.konzerra.memories.domain.model.Memory
 import com.konzerra.memories.domain.repository.MemoryRepository
@@ -15,6 +16,10 @@ class MemoryRepositoryImpl @Inject constructor(
     }
     override suspend fun getMemoryList(): List<MemoryDto> {
         return localDB.getMemoryList()
+    }
+
+    override suspend fun getTagList(): List<TagDto> {
+        return localDB.getTagList()
     }
 
     override suspend fun writeMemory(memory: MemoryDto) {

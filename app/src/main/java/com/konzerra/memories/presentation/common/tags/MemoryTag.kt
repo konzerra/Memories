@@ -1,6 +1,7 @@
 package com.konzerra.memories.presentation.common
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +17,8 @@ import com.konzerra.memories.ui.theme.White
 
 @Composable
 fun MemoryTag(
-    tag: Tag
+    tag: Tag,
+    onClicked: (Tag)->Unit
 ){
     Box(modifier = Modifier
         .border(
@@ -25,6 +27,9 @@ fun MemoryTag(
             shape = RoundedCornerShape(100.dp)
         )
         .padding(10.dp)
+        .clickable {
+            onClicked(tag)
+        }
     ){
         Text(
             text = tag.text,

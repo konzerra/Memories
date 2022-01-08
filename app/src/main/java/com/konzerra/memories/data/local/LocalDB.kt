@@ -2,12 +2,9 @@ package com.konzerra.memories.data.local
 
 import android.util.Log
 import com.konzerra.memories.data.dto.MemoryDto
-import com.konzerra.memories.domain.model.Memory
-import com.konzerra.memories.domain.model.toMemoryDto
+import com.konzerra.memories.data.dto.TagDto
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmList
-import org.bson.types.ObjectId
 import javax.inject.Inject
 
 
@@ -23,6 +20,9 @@ class LocalDB @Inject constructor(
     }
     suspend fun getMemoryList():List<MemoryDto>{
         return realm.where(MemoryDto::class.java).findAllAsync()
+    }
+    suspend fun getTagList():List<TagDto>{
+        return realm.where(TagDto::class.java).findAllAsync()
     }
     suspend fun writeMemory(memory: MemoryDto){
         realm.executeTransactionAsync{ r->

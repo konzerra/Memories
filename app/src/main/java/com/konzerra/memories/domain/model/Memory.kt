@@ -12,15 +12,3 @@ data class Memory(
     val date: String,
     val id: String,
 )
-fun Memory.toMemoryDto(): MemoryDto {
-    val realmList:RealmList<TagDto> = RealmList()
-    tags.forEach {
-        realmList.add(it.toTagDto())
-    }
-    return MemoryDto(
-        id = id,
-        text =text,
-        date = date,
-        tags = realmList
-    )
-}

@@ -114,6 +114,7 @@ fun ExpandableMemoryCard(
                             .fillMaxWidth()
                             .height(2.dp)
                             .background(Purple)
+                            .padding(top = 8.dp, bottom = 8.dp)
                     )
                 }
 

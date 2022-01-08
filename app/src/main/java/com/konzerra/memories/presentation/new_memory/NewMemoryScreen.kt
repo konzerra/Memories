@@ -15,6 +15,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konzerra.memories.presentation.common.tags.MemoryTagsView
 import com.konzerra.memories.presentation.common.buttons.ButtonBottom
+import com.konzerra.memories.presentation.common.dialogs.NewTagDialog
 import com.konzerra.memories.presentation.common.top_bars.TopBarText
 import com.konzerra.memories.presentation.common.top_bars.Triangle
 import com.konzerra.memories.presentation.new_memory.components.EditTextView
@@ -37,6 +38,7 @@ fun NewMemoryScreen(
                 .background(Black)
 
         ) {
+
             Text(
                 text = "Tags",
                 modifier = Modifier
@@ -44,10 +46,15 @@ fun NewMemoryScreen(
                     .padding(start = 16.dp)
             )
             MemoryTagsView(
-                tags = state.tags,
+                tags = viewModel.newTagList.value,
                 modifier = Modifier
                     .layoutId("memoryTagsView")
-                    .padding(start = 16.dp,top = 8.dp)
+                    .padding(start = 16.dp, top = 8.dp),
+                onTagClicked = {
+                    if(it.id == "-1"){
+                        viewModel.setNewTagDialogState()
+                    }
+                }
             )
             EditTextView(modifier = Modifier
                 .layoutId("editTextView"),
@@ -70,7 +77,17 @@ fun NewMemoryScreen(
                 }
             )
             Triangle(modifier = Modifier.layoutId("topTriangle"))
-
+        }
+        if(viewModel.newTagDialogState.value){
+            NewTagDialog(
+                openDialog = viewModel.newTagDialogState.value,
+                onClicked = {
+                    viewModel.pushNewTag(it)
+                    viewModel.setNewTagDialogState()
+                },
+                onCloseDialog = {
+                    viewModel.setNewTagDialogState()
+                })
         }
     }
 
