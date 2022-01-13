@@ -1,6 +1,5 @@
 package com.konzerra.memories.presentation.memory
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,6 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
@@ -16,9 +17,8 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konzerra.memories.SharedViewModel
-import com.konzerra.memories.domain.model.Memory
-import com.konzerra.memories.presentation.common.tags.MemoryTagsView
 import com.konzerra.memories.presentation.common.buttons.ButtonBottom
+import com.konzerra.memories.presentation.common.tags.MemoryTagsView
 import com.konzerra.memories.presentation.common.top_bars.TopBarText
 import com.konzerra.memories.presentation.common.top_bars.Triangle
 import com.konzerra.memories.ui.theme.Black
@@ -32,12 +32,13 @@ fun MemoryScreen(
 ){
     viewModel.setMemory(memoryId)
     val state = viewModel.state.value
-    val constraints = setConstraints()
-
+    val constraints = remember {
+        mutableStateOf(setConstraints())
+    }
     Surface(color = Black){
         state.memory?.let{
             ConstraintLayout(
-                constraints,
+                constraints.value,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Black)
@@ -58,10 +59,16 @@ fun MemoryScreen(
                         //TODO
                     }
                 )
+                Text(
+                    modifier = Modifier
+                        .layoutId("tvDate")
+                        .padding(start = 16.dp, bottom = 16.dp),
+                    text = state.memory.date
+                )
                 LazyColumn(
                     modifier = Modifier
                         .layoutId("textView")
-                        .padding(start = 16.dp, end = 16.dp)
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp)
                         .fillMaxSize()
                 ){
                     item {
@@ -103,6 +110,7 @@ private fun setConstraints(): ConstraintSet {
         val tvTags = createRefFor("tvTags")
         val memoryTagsView = createRefFor("memoryTagsView")
         val buttonRemember = createRefFor("buttonRemember")
+        val tvDate = createRefFor("tvDate")
         constrain(textView) {
             top.linkTo(memoryTagsView.bottom)
             bottom.linkTo(buttonRemember.top)
@@ -142,7 +150,13 @@ private fun setConstraints(): ConstraintSet {
             width = Dimension.wrapContent
             height = Dimension.wrapContent
         }
-
+        constrain(tvDate){
+            top.linkTo(textView.bottom)
+            start.linkTo(parent.start)
+            bottom.linkTo(buttonRemember.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
     }
     return constraints
 }

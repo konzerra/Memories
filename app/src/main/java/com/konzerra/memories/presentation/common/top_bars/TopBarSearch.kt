@@ -26,15 +26,13 @@ import com.konzerra.memories.ui.theme.*
 @Composable
 fun TopBarSearch(
     searchTitle:String,
+    searchText:String,
     onMenuClicked:(Unit) -> Unit,
-    onSearchRequest:(String) -> Unit,
+    onSearchRequest:(Unit) -> Unit,
+    onSearchTextChanged:(String) ->Unit,
     modifier: Modifier
 ) {
-    var textFieldState by remember {
-        mutableStateOf("")
-    }
     val constraints = setConstraints()
-
     Card(modifier = modifier
         .height(56.dp),
         elevation =  4.dp,
@@ -66,7 +64,7 @@ fun TopBarSearch(
                     .layoutId("editTextView")
                     .padding(end = 5.dp)
                 ,
-                value = textFieldState,
+                value = searchText,
                 label = { Text(searchTitle, color = White) },
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = White,
@@ -76,7 +74,7 @@ fun TopBarSearch(
                     disabledIndicatorColor = Color.Transparent,
                 ),
                 onValueChange = {
-                    textFieldState=it
+                    onSearchTextChanged(it)
                 },
             )
             Image(
@@ -86,7 +84,10 @@ fun TopBarSearch(
                     .layoutId("iconSearchView")
                     .padding(end = 100.dp,)
                     .height(25.dp)
-                    .width(25.dp),
+                    .width(25.dp)
+                    .clickable {
+                       onSearchRequest(Unit)
+                    },
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.lighting(White, White)
             )

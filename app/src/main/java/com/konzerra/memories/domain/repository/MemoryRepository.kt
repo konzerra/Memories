@@ -4,10 +4,6 @@ import com.konzerra.memories.data.dto.MemoryDto
 import com.konzerra.memories.data.dto.TagDto
 import com.konzerra.memories.domain.model.Memory
 
-interface MemoryRepository {
-    suspend fun getMemory (memoryId:String): MemoryDto?
-    suspend fun getMemoryList (): List<MemoryDto>
-    suspend fun getTagList():List<TagDto>
-    suspend fun writeMemory(memory:MemoryDto)
-    suspend fun updateMemory(memory: Memory)
+interface MemoryRepository:LocalDataSourceRepository {
+
 }

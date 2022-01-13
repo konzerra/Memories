@@ -38,6 +38,11 @@ sealed class Screen(
         R.string.about_us,
         R.drawable.ic_about_us
     )
+    object TagListScreen : Screen(
+        "tag_list_screen",
+        R.string.tag_list,
+        R.drawable.ic_tab
+    )
     fun startScreen(): Screen {
         return NewMemoryScreen
     }

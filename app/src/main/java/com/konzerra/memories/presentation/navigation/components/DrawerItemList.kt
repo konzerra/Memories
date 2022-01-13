@@ -59,12 +59,18 @@ fun DrawerItemList(
                             onItemClicked(screen)
                         }
                     )
-
+                    DrawerItem(
+                        thisScreen = Screen.TagListScreen,
+                        currentScreen = currentScreen,
+                        onClick = { screen ->
+                            onItemClicked(screen)
+                        }
+                    )
                     Spacer(
                         modifier = Modifier
                             .padding(start = 58.dp, end = 6.dp, bottom = 8.dp,)
                             .fillMaxWidth()
-                            .height(4.dp)
+                            .height(2.dp)
                             .background(Purple)
                     )
                     DrawerItem(

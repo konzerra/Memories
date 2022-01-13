@@ -1,5 +1,6 @@
 package com.konzerra.memories.presentation.new_memory
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -30,6 +32,7 @@ fun NewMemoryScreen(
 
     val state = viewModel.state.value
     val constraints = setConstraints()
+    val context = LocalContext.current
     Surface(color = Black){
         ConstraintLayout(
             constraints,
@@ -67,7 +70,21 @@ fun NewMemoryScreen(
                 .layoutId("buttonRemember"),
                 text = "Remember",
                 onClicked = {
-                    viewModel.rememberMemory()
+                    if(viewModel.memoryText.value.isBlank()){
+                        Toast.makeText(
+                            context,
+                            "Can not remember nothing...",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }else{
+                        viewModel.rememberMemory()
+                        Toast.makeText(
+                            context,
+                            "Remembered",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
                 })
             TopBarText(
                 modifier = Modifier.layoutId("topBar"),

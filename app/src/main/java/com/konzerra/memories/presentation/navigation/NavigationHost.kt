@@ -12,6 +12,7 @@ import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.memory.MemoryScreen
 import com.konzerra.memories.presentation.memory_list.MemoryListScreen
 import com.konzerra.memories.presentation.new_memory.NewMemoryScreen
+import com.konzerra.memories.presentation.tag_list.TagListScreen
 
 @ExperimentalMaterialApi
 @Composable
@@ -58,7 +59,13 @@ fun Navigation(
                 memoryId = entry.arguments?.getString("memoryId") ?: "",
             )
         }
-
+        composable(
+            route = Screen.TagListScreen.route,
+        ){
+            TagListScreen(
+                openDrawer = openDrawer,
+            )
+        }
 
     }
 }

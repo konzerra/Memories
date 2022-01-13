@@ -12,14 +12,13 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konzerra.memories.presentation.common.top_bars.TopBarSearch
 import com.konzerra.memories.presentation.common.top_bars.Triangle
-import com.konzerra.memories.presentation.memory_list.common.MemoryListView
-import com.konzerra.memories.presentation.memory_list.setConstraints
-import com.konzerra.memories.presentation.navigation.Screen
+import com.konzerra.memories.presentation.tag_list.components.TagListView
 import com.konzerra.memories.ui.theme.Black
 
 @Composable
 fun TagListScreen(
-    viewModel: TagListViewModel = hiltViewModel()
+    viewModel: TagListViewModel = hiltViewModel(),
+    openDrawer:(Unit)->Unit
 ) {
     val state = viewModel.state.value
     val constraints = setConstraints()
@@ -31,12 +30,11 @@ fun TagListScreen(
                 .background(Black)
 
         ) {
-            MemoryListView(
+            TagListView(
                 modifier = Modifier.layoutId("memoryListView"),
-                memoryList = state.memories,
-                onButtonClick = {
+                tagList = state.tags,
+                onTagClicked = {
 
-                    navController.navigate(Screen.MemoryScreen.route + "/${it.id}")
                 }
             )
             TopBarSearch(

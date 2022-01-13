@@ -40,20 +40,23 @@ fun MemoryListScreen(
         ) {
             MemoryListView(
                 modifier = Modifier.layoutId("memoryListView"),
-                memoryList = state.memories,
+                memoryList = emptyList(),
                 onButtonClick = {
-
                     navController.navigate(Screen.MemoryScreen.route+"/${it.id}")
                 }
             )
             TopBarSearch(
                 modifier = Modifier.layoutId("topBar"),
                 searchTitle = "Search",
+                searchText = viewModel.searchText.value,
                 onMenuClicked = {
                     openDrawer(Unit)
                 },
                 onSearchRequest = {
-
+                    viewModel.search()
+                },
+                onSearchTextChanged = {
+                    viewModel.setSearchText(it)
                 }
             )
             Triangle(modifier = Modifier.layoutId("topTriangle"))

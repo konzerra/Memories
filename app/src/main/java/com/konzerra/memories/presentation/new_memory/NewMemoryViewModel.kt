@@ -68,6 +68,8 @@ class NewMemoryViewModel @Inject constructor(
                 tags = realmList,
             )
             writeMemoryUseCase.invoke(newMemory, _existingTagList.value)
+            _newTagList.value = emptyList()
+            _memoryText.value = ""
         }
     }
     private fun getTagList(){
