@@ -40,11 +40,15 @@ fun TagListScreen(
             TopBarSearch(
                 modifier = Modifier.layoutId("topBar"),
                 searchTitle = "Search",
+                searchText = viewModel.searchText.value,
                 onMenuClicked = {
                     openDrawer(Unit)
                 },
                 onSearchRequest = {
 
+                },
+                onSearchTextChanged = {
+                    viewModel.setSearchText(it)
                 }
             )
             Triangle(modifier = Modifier.layoutId("topTriangle"))

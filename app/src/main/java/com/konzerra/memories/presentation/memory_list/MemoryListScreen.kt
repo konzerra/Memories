@@ -28,7 +28,10 @@ fun MemoryListScreen(
     sharedViewModel: SharedViewModel = hiltViewModel(),
 )
 {
-    val state = viewModel.state.value
+    var memoryList = viewModel.defaultMemoryList
+    if(viewModel.searchText.value.isNotBlank()){
+        memoryList = viewModel.searchedMemoryList
+    }
     val constraints = setConstraints()
     Surface(color = Black){
         ConstraintLayout(
@@ -40,7 +43,7 @@ fun MemoryListScreen(
         ) {
             MemoryListView(
                 modifier = Modifier.layoutId("memoryListView"),
-                memoryList = emptyList(),
+                memoryList = memoryList.value,
                 onButtonClick = {
                     navController.navigate(Screen.MemoryScreen.route+"/${it.id}")
                 }
@@ -53,10 +56,11 @@ fun MemoryListScreen(
                     openDrawer(Unit)
                 },
                 onSearchRequest = {
-                    viewModel.search()
+                    viewModel.searchByKey()
                 },
                 onSearchTextChanged = {
                     viewModel.setSearchText(it)
+                    viewModel.searchByKey()
                 }
             )
             Triangle(modifier = Modifier.layoutId("topTriangle"))

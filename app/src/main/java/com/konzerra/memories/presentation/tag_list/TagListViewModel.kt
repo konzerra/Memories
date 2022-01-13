@@ -19,8 +19,14 @@ class TagListViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = mutableStateOf(TagListState())
     val state : State<TagListState> = _state
+    private val _searchText = mutableStateOf("")
+    val searchText : State<String> = _searchText
+
     init{
         getTagList()
+    }
+    fun setSearchText(searchText:String){
+        _searchText.value = searchText
     }
     private fun getTagList(){
         getTagListUseCase().onEach { result->
