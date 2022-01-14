@@ -10,29 +10,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.memory.MemoryScreen
+import com.konzerra.memories.presentation.memory.MemoryScreenViewModel
 import com.konzerra.memories.presentation.memory_list.MemoryListScreen
+import com.konzerra.memories.presentation.memory_list.MemoryListViewModel
 import com.konzerra.memories.presentation.new_memory.NewMemoryScreen
+import com.konzerra.memories.presentation.new_memory.NewMemoryViewModel
 import com.konzerra.memories.presentation.tag_list.TagListScreen
+import com.konzerra.memories.presentation.tag_list.TagListViewModel
 
 @ExperimentalMaterialApi
 @Composable
 fun Navigation(
     navController: NavHostController,
-    openDrawer: (Unit) -> Unit
+    openDrawer: (Unit) -> Unit,
+    sharedViewModel: SharedViewModel = hiltViewModel(),
+    memoryScreenViewModel: MemoryScreenViewModel = hiltViewModel(),
+    memoryListViewModel: MemoryListViewModel = hiltViewModel(),
+    newMemoryViewModel: NewMemoryViewModel = hiltViewModel(),
+    tagListViewModel: TagListViewModel = hiltViewModel()
 ){
-    val sharedViewModel: SharedViewModel = hiltViewModel()
+
+
     NavHost(
         navController = navController,
         startDestination =  navController.currentDestination?.route ?: Screen.NewMemoryScreen.route ,
     ){
-
 
         composable(
             route = Screen.NewMemoryScreen.route
         ){
             sharedViewModel.setCurrentScreen(Screen.NewMemoryScreen.route)
             NewMemoryScreen(
-                openDrawer = openDrawer
+                openDrawer = openDrawer,
+                viewModel = newMemoryViewModel,
             )
         }
         composable(
@@ -42,6 +52,8 @@ fun Navigation(
             MemoryListScreen(
                 openDrawer = openDrawer,
                 navController = navController,
+                viewModel = memoryListViewModel,
+                sharedViewModel = sharedViewModel,
             )
         }
         composable(
@@ -56,14 +68,18 @@ fun Navigation(
 
             MemoryScreen(
                 openDrawer = openDrawer,
+                viewModel = memoryScreenViewModel,
+                sharedViewModel = sharedViewModel,
                 memoryId = entry.arguments?.getString("memoryId") ?: "",
             )
         }
         composable(
             route = Screen.TagListScreen.route,
         ){
+            sharedViewModel.setCurrentScreen(Screen.TagListScreen.route)
             TagListScreen(
                 openDrawer = openDrawer,
+                viewModel = tagListViewModel
             )
         }
 

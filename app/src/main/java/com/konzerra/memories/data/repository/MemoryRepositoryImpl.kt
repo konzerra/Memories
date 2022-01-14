@@ -13,6 +13,10 @@ class MemoryRepositoryImpl @Inject constructor(
     private val localDB: LocalDB
     ):MemoryRepository
 {
+    override suspend fun getMemoryListByTagAndOrKey(key: String, tags: List<Tag>): List<MemoryDto> {
+        return localDB.getMemoryListByTagAndOrKey(key,tags)
+    }
+
     override suspend fun getMemory(memoryId: String): MemoryDto? {
         return localDB.getMemory(memoryId)
     }
@@ -24,6 +28,10 @@ class MemoryRepositoryImpl @Inject constructor(
         return localDB.getTagList()
     }
 
+    override suspend fun getTagListByKey(key: String): List<TagDto> {
+        return localDB.getTagListByKey(key)
+    }
+
     override suspend fun writeMemory(memory: MemoryDto) {
         localDB.writeMemory(memory)
     }
@@ -32,13 +40,7 @@ class MemoryRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getMemoryListByTag(tag: Tag): List<MemoryDto> {
-        return localDB.getMemoryListByTag(tag)
-    }
 
-    override suspend fun getMemoryListByKey(key: String): List<MemoryDto> {
-        TODO("Not yet implemented")
-    }
 
 
 }

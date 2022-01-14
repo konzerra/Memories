@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
@@ -27,15 +29,17 @@ import com.konzerra.memories.ui.theme.Black
 @Composable
 fun NewMemoryScreen(
     openDrawer: (Unit) -> Unit,
-    viewModel: NewMemoryViewModel = hiltViewModel(),
+    viewModel: NewMemoryViewModel,
 ){
 
     val state = viewModel.state.value
-    val constraints = setConstraints()
+    val constraints = remember {
+        mutableStateOf(setConstraints())
+    }
     val context = LocalContext.current
     Surface(color = Black){
         ConstraintLayout(
-            constraints,
+            constraints.value,
             modifier = Modifier
                 .fillMaxSize()
                 .background(Black)

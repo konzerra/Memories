@@ -7,15 +7,15 @@ import com.konzerra.memories.domain.model.Tag
 
 interface LocalDataSourceRepository {
 
-    suspend fun getMemoryListByTag(tag:Tag):List<MemoryDto>
-
-    suspend fun getMemoryListByKey(key:String):List<MemoryDto>
+    suspend fun getMemoryListByTagAndOrKey(key:String,tags:List<Tag>):List<MemoryDto>
 
     suspend fun getMemory (memoryId:String): MemoryDto?
 
     suspend fun getMemoryList (): List<MemoryDto>
 
     suspend fun getTagList():List<TagDto>
+
+    suspend fun getTagListByKey(key:String):List<TagDto>
 
     suspend fun writeMemory(memory:MemoryDto)
 

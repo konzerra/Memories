@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-class GetMemoryListByTagUseCase @Inject constructor(
+class GetMemoryListByTagAndOrKeyUseCase @Inject constructor(
     private val repository: MemoryRepository
 ) {
-    operator fun invoke(tag:Tag): Flow<Resource<List<Memory>>> = flow {
+    operator fun invoke(key:String, tags:List<Tag>): Flow<Resource<List<Memory>>> = flow {
         try {
             emit(Resource.Loading())
-            val memoryList = repository.getMemoryListByTag(tag)
+            val memoryList = repository.getMemoryListByTagAndOrKey(key,tags)
             emit(Resource.Success(memoryList.map {
                 it.toMemory()
             }))

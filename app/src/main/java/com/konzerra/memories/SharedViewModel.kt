@@ -22,7 +22,7 @@ class SharedViewModel @Inject constructor(): ViewModel(){
     fun setCurrentMemory(memory: Memory){
 
         _currentMemory.value = memory
-        Log.w("testingMemory",memory.text)
+
     }
     fun saveNavControllerState(state: Bundle){
         _navControllerState.value = state

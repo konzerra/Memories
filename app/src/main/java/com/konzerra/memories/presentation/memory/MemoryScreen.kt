@@ -27,8 +27,8 @@ import com.konzerra.memories.ui.theme.Black
 fun MemoryScreen(
     openDrawer: (Unit) -> Unit,
     memoryId:String,
-    viewModel: MemoryScreenViewModel = hiltViewModel(),
-    sharedViewModel: SharedViewModel = hiltViewModel(),
+    viewModel: MemoryScreenViewModel,
+    sharedViewModel: SharedViewModel,
 ){
     viewModel.setMemory(memoryId)
     val state = viewModel.state.value
