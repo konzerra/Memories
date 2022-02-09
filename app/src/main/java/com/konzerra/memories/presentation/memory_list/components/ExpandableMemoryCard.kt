@@ -1,4 +1,4 @@
-package com.konzerra.memories.presentation.memory_list.common
+package com.konzerra.memories.presentation.memory_list.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing

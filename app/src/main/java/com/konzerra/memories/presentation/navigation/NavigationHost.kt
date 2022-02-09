@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.about_us.AboutUsScreen
+import com.konzerra.memories.presentation.help.HelpScreen
+import com.konzerra.memories.presentation.help.HelpScreenViewModel
 import com.konzerra.memories.presentation.memory.MemoryScreen
 import com.konzerra.memories.presentation.memory.MemoryScreenViewModel
 import com.konzerra.memories.presentation.memory_list.MemoryListScreen
@@ -28,7 +30,8 @@ fun Navigation(
     memoryScreenViewModel: MemoryScreenViewModel = hiltViewModel(),
     memoryListViewModel: MemoryListViewModel = hiltViewModel(),
     newMemoryViewModel: NewMemoryViewModel = hiltViewModel(),
-    tagListViewModel: TagListViewModel = hiltViewModel()
+    tagListViewModel: TagListViewModel = hiltViewModel(),
+    helpListScreenViewModel: HelpScreenViewModel = hiltViewModel()
 ){
 
 
@@ -89,6 +92,15 @@ fun Navigation(
             sharedViewModel.setCurrentScreen(Screen.AboutUsScreen.route)
             AboutUsScreen(
                 openDrawer = openDrawer,
+            )
+        }
+        composable(
+            route = Screen.HelpScreen.route,
+        ){
+            sharedViewModel.setCurrentScreen(Screen.HelpScreen.route)
+            HelpScreen(
+                openDrawer = openDrawer,
+                viewModel = helpListScreenViewModel
             )
         }
 

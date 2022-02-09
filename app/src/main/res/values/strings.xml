@@ -7,4 +7,11 @@
     <string name="help">Help</string>
     <string name="about_us">About us</string>
     <string name="tag_list">Tags</string>
+
+    <string-array name="tip_list">
+        <item>Why?\n\nTo remember everything</item>
+        <item>How to search a memory?\n\nBy tag or key</item>
+        <item>How to delete a memory?\n\nYou can delete the memory within 48 hours</item>
+
+    </string-array>
 </resources>

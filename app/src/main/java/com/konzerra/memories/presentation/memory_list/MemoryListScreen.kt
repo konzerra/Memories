@@ -22,7 +22,7 @@ import com.konzerra.memories.presentation.common.dialogs.NewTagDialog
 import com.konzerra.memories.presentation.common.tags.MutableMemoryTagsView
 import com.konzerra.memories.presentation.common.top_bars.TopBarSearch
 import com.konzerra.memories.presentation.common.top_bars.Triangle
-import com.konzerra.memories.presentation.memory_list.common.MemoryListView
+import com.konzerra.memories.presentation.memory_list.components.MemoryListView
 import com.konzerra.memories.presentation.navigation.Screen
 import com.konzerra.memories.ui.theme.Black
 

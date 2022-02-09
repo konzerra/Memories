@@ -1,4 +1,4 @@
-package com.konzerra.memories.presentation.memory_list.common
+package com.konzerra.memories.presentation.memory_list.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
