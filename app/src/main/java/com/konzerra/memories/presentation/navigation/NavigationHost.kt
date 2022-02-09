@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.konzerra.memories.SharedViewModel
+import com.konzerra.memories.presentation.about_us.AboutUsScreen
 import com.konzerra.memories.presentation.memory.MemoryScreen
 import com.konzerra.memories.presentation.memory.MemoryScreenViewModel
 import com.konzerra.memories.presentation.memory_list.MemoryListScreen
@@ -80,6 +81,14 @@ fun Navigation(
             TagListScreen(
                 openDrawer = openDrawer,
                 viewModel = tagListViewModel
+            )
+        }
+        composable(
+            route = Screen.AboutUsScreen.route,
+        ){
+            sharedViewModel.setCurrentScreen(Screen.AboutUsScreen.route)
+            AboutUsScreen(
+                openDrawer = openDrawer,
             )
         }
 

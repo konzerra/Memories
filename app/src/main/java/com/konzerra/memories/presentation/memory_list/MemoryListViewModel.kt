@@ -37,7 +37,9 @@ class MemoryListViewModel  @Inject constructor(
     init{
         getMemoryList()
     }
-
+    fun updateList(){
+        getMemoryList()
+    }
     fun pushNewTag(newTag:String){
         _tags.value = _tags.value.plus(Tag(newTag,"1"))
         if(_tags.value.isNotEmpty()){
@@ -45,11 +47,21 @@ class MemoryListViewModel  @Inject constructor(
         }
 
     }
+    fun pullNewTag(tag: Tag){
+        val list = _tags.value.toMutableList()
+        list.removeIf {
+            it.text == tag.text
+        }
+        _tags.value = list
+        if(_tags.value.isNotEmpty()){
+            getMemoryListByTagAndOrKey()
+        }
+    }
     fun setNewTagDialogState(){
         _newTagDialogState.value = !newTagDialogState.value
     }
     fun searchByKey(){
-        if(_searchText.value.isNotBlank()){
+        if(_searchText.value.isNotBlank() || _tags.value.isNotEmpty()){
             getMemoryListByTagAndOrKey()
         }
     }

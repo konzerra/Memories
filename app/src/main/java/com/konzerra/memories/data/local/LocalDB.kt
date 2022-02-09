@@ -49,7 +49,7 @@ class LocalDB @Inject constructor(
         val query = realm.where(MemoryDto::class.java).apply {
             if(tags.isNotEmpty()){
                 tags.forEach {
-                    this.equalTo("tags.text", it.text, Case.INSENSITIVE)
+                    this.contains("tags.text", it.text, Case.INSENSITIVE).and()
                     if(key.isNotBlank()){
                         this.and().contains("text", key, Case.INSENSITIVE)
                     }

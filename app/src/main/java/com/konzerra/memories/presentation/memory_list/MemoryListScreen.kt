@@ -1,11 +1,13 @@
 package com.konzerra.memories.presentation.memory_list
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -14,11 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.common.dialogs.NewTagDialog
-import com.konzerra.memories.presentation.common.tags.MemoryTagsView
+import com.konzerra.memories.presentation.common.tags.MutableMemoryTagsView
 import com.konzerra.memories.presentation.common.top_bars.TopBarSearch
 import com.konzerra.memories.presentation.common.top_bars.Triangle
 import com.konzerra.memories.presentation.memory_list.common.MemoryListView
@@ -34,6 +35,13 @@ fun MemoryListScreen(
     sharedViewModel: SharedViewModel,
 )
 {
+    viewModel.updateList()
+    DisposableEffect(key1 = viewModel) {
+        viewModel.updateList()
+        Log.w("testingCompose", "onStart")
+        onDispose {  }
+    }
+
     var memoryList = viewModel.defaultMemoryList
     if(viewModel.searchText.value.isNotBlank() || viewModel.tags.value.isNotEmpty()){
         memoryList = viewModel.searchedMemoryList
@@ -49,7 +57,7 @@ fun MemoryListScreen(
                 .background(Black)
 
         ) {
-            MemoryTagsView(
+            MutableMemoryTagsView(
                 tags = viewModel.tags.value,
                 modifier = Modifier
                     .layoutId("memoryTagsView")
@@ -59,7 +67,11 @@ fun MemoryListScreen(
                     if(it.id == "-1"){
                         viewModel.setNewTagDialogState()
                     }
-                })
+                },
+                onTagCancelClicked = {
+                    viewModel.pullNewTag(it)
+                }
+            )
             MemoryListView(
                 modifier = Modifier.layoutId("memoryListView"),
                 memoryList = memoryList.value,
@@ -79,7 +91,7 @@ fun MemoryListScreen(
                 },
                 onSearchTextChanged = {
                     viewModel.setSearchText(it)
-                    if(viewModel.searchText.value.isNotBlank()){
+                    if(viewModel.searchText.value.isNotBlank() || viewModel.tags.value.isNotEmpty()){
                         viewModel.searchByKey()
                     }
                 }

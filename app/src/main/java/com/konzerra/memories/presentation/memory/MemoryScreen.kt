@@ -15,10 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.common.buttons.ButtonBottom
-import com.konzerra.memories.presentation.common.tags.MemoryTagsView
+import com.konzerra.memories.presentation.common.tags.MutableMemoryTagsView
 import com.konzerra.memories.presentation.common.top_bars.TopBarText
 import com.konzerra.memories.presentation.common.top_bars.Triangle
 import com.konzerra.memories.ui.theme.Black
@@ -50,13 +49,16 @@ fun MemoryScreen(
                         .layoutId("tvTags")
                         .padding(start = 16.dp)
                 )
-                MemoryTagsView(
+                MutableMemoryTagsView(
                     tags = state.memory.tags,
                     modifier = Modifier
                         .layoutId("memoryTagsView")
                         .padding(start = 16.dp, top = 8.dp),
                     onTagClicked = {
                         //TODO
+                    },
+                    onTagCancelClicked = {
+
                     }
                 )
                 Text(

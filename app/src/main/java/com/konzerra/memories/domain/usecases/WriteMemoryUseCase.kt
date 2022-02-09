@@ -1,5 +1,6 @@
 package com.konzerra.memories.domain.usecases
 
+import androidx.compose.runtime.currentComposer
 import com.konzerra.memories.common.Resource
 import com.konzerra.memories.data.dto.MemoryDto
 import com.konzerra.memories.data.dto.TagDto
@@ -20,13 +21,16 @@ class WriteMemoryUseCase@Inject constructor(
     suspend operator fun invoke(memory: MemoryDto, existingTagList: List<TagDto>){
         val date = Calendar.getInstance().time
         memory.date = date.toString()
-        memory.tags?.forEach { newTag->
-            existingTagList.forEach { existingTag->
-                if(newTag.text == existingTag.text && newTag.id!=existingTag.id){
-                    memory.tags!!.remove(newTag)
+
+        existingTagList.forEach { existingTag->
+            memory.tags!!.removeIf {
+                it.text == existingTag.text
+            }.also {
+                if(it){
                     memory.tags!!.add(existingTag)
                 }
             }
+
         }
         repository.writeMemory(memory)
     }

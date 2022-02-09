@@ -1,4 +1,4 @@
-package com.konzerra.memories.presentation.common
+package com.konzerra.memories.presentation.common.tags
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -11,19 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.konzerra.memories.R
 import com.konzerra.memories.domain.model.Tag
 import com.konzerra.memories.ui.theme.Purple
 import com.konzerra.memories.ui.theme.White
-import com.konzerra.memories.R
 
 @Composable
-fun MemoryTag(
+fun MutableMemoryTag(
     tag: Tag,
-    onClicked: (Tag)->Unit
+    onClicked: (Tag)->Unit,
+    onCancelClicked:(Tag)->Unit,
 ){
     Box(modifier = Modifier
         .border(
@@ -32,16 +32,31 @@ fun MemoryTag(
             shape = RoundedCornerShape(100.dp)
         )
         .padding(10.dp)
-        .clickable {
-            onClicked(tag)
-        }
+
     ){
         Row(){
             Text(
                 text = tag.text,
                 color = White,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.clickable {
+                    onClicked(tag)
+                }
+            )
+            Image(
+                painterResource(R.drawable.ic_close),
+                "",
+                modifier = Modifier
+                    .padding(end = 0.dp, start = 3.dp)
+                    .height(20.dp)
+                    .width(20.dp)
+                    .clickable {
+                        onCancelClicked(tag)
+                    }
+                ,
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.lighting(White, White)
             )
         }
 

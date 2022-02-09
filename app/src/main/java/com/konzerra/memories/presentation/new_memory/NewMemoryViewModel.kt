@@ -1,5 +1,6 @@
 package com.konzerra.memories.presentation.new_memory
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +49,13 @@ class NewMemoryViewModel @Inject constructor(
             id = "0",
         )
         _newTagList.value = _newTagList.value.plus(newTag)
+    }
+    fun pullNewTag(tag: Tag){
+        val list = _newTagList.value.toMutableList()
+        list.removeIf {
+            it.text == tag.text
+        }
+        _newTagList.value = list
     }
     fun setNewTagDialogState(){
         _newTagDialogState.value = !newTagDialogState.value
