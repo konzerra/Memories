@@ -2,12 +2,14 @@ package com.konzerra.memories.presentation.navigation
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringArrayResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.konzerra.memories.R
 import com.konzerra.memories.SharedViewModel
 import com.konzerra.memories.presentation.about_us.AboutUsScreen
 import com.konzerra.memories.presentation.help.HelpScreen
@@ -18,6 +20,8 @@ import com.konzerra.memories.presentation.memory_list.MemoryListScreen
 import com.konzerra.memories.presentation.memory_list.MemoryListViewModel
 import com.konzerra.memories.presentation.new_memory.NewMemoryScreen
 import com.konzerra.memories.presentation.new_memory.NewMemoryViewModel
+import com.konzerra.memories.presentation.settings.SettingsScreen
+import com.konzerra.memories.presentation.settings.SettingsScreenViewModel
 import com.konzerra.memories.presentation.tag_list.TagListScreen
 import com.konzerra.memories.presentation.tag_list.TagListViewModel
 
@@ -31,7 +35,8 @@ fun Navigation(
     memoryListViewModel: MemoryListViewModel = hiltViewModel(),
     newMemoryViewModel: NewMemoryViewModel = hiltViewModel(),
     tagListViewModel: TagListViewModel = hiltViewModel(),
-    helpListScreenViewModel: HelpScreenViewModel = hiltViewModel()
+    helpListScreenViewModel: HelpScreenViewModel = hiltViewModel(),
+    settingsScreenViewModel: SettingsScreenViewModel = hiltViewModel()
 ){
 
 
@@ -100,9 +105,19 @@ fun Navigation(
             sharedViewModel.setCurrentScreen(Screen.HelpScreen.route)
             HelpScreen(
                 openDrawer = openDrawer,
-                viewModel = helpListScreenViewModel
+                viewModel = helpListScreenViewModel,
+                tips = stringArrayResource(id = R.array.tip_list).toList()
             )
         }
+        composable(
+            route = Screen.SettingsScreen.route,
+        ){
+            sharedViewModel.setCurrentScreen(Screen.SettingsScreen.route)
+            SettingsScreen(
+                openDrawer = openDrawer,
+                viewModel = settingsScreenViewModel,
 
+            )
+        }
     }
 }
